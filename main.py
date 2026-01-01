@@ -1920,10 +1920,16 @@ else:
             html_card = f"""
             <div style="
                 width:100%;
+                max-width:100vw;
+                box-sizing:border-box;
+                margin-left:auto;
+                margin-right:auto;
+                overflow:hidden;
+
                 border:1px solid #e0e0e0;
                 border-radius:10px;
-                padding:12px 16px;
-                margin-bottom:12px;
+                padding:8px 14px;
+                margin-bottom:8px;
                 background-color:#ffffff;
                 box-shadow:0 1px 3px rgba(0,0,0,0.05);
             ">
