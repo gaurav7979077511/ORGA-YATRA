@@ -539,7 +539,7 @@ else:
 
     # --- DASHBOARD UI ---
     st.sidebar.header("📂 Navigation")
-    page = st.sidebar.radio("Go to:", ["Dashboard", "Monthly Summary", "Grouped Data", "Expenses", "Investment", "Collection Data", "Bank Transaction", "Performance" ])
+    page = st.sidebar.radio("Go to:", ["Dashboard", "Monthly Summary", "Grouped Data", "Expenses", "Investment","Vayuvolt Investment", "Collection Data", "Bank Transaction", "Performance" ])
 
     if page == "Dashboard":
         st.title("📊 VayuVolt Dashboard")
@@ -1814,10 +1814,103 @@ else:
                 filtered_df_lm.sort_values(by="Collection Date", ascending=False),
                 use_container_width=True
             )
+    
+    elif page == "Vayuvolt Investment":
+        st.title("🏢 Vayuvolt – External Investments")
+
+        # ===============================
+        # 1️⃣ FILTER BANK TRANSACTIONS
+        # ===============================
+        vayuvolt_df = bank_df[
+            bank_df["Transaction Type"].isin([
+                "Vayuvolt_Investment",
+                "Return_On_Investment"
+            ])
+        ].copy()
+
+        # Rename for consistency
+        vayuvolt_df.rename(columns={
+            "Amount": "Transaction Amount",
+            "Reason": "Details"
+        }, inplace=True)
+
+        # Date parsing
+        vayuvolt_df["Date"] = pd.to_datetime(
+            vayuvolt_df["Date"], dayfirst=True, errors="coerce"
+        )
+
+        # ===============================
+        # 2️⃣ KPI CALCULATIONS
+        # ===============================
+        total_invested = (
+            vayuvolt_df[vayuvolt_df["Transaction Type"] == "Vayuvolt_Investment"]
+            ["Transaction Amount"]
+            .sum()
+        )
+
+        total_return = (
+            vayuvolt_df[vayuvolt_df["Transaction Type"] == "Return_On_Investment"]
+            ["Transaction Amount"]
+            .sum()
+        )
+
+        # ===============================
+        # 3️⃣ KPI DISPLAY
+        # ===============================
+        col1, col2 = st.columns(2)
+        col1.metric("💸 Total Invested", f"₹{total_invested:,.0f}")
+        col2.metric("📈 Total Return / Profit", f"₹{total_return:,.0f}")
+
+        st.markdown("---")
+
+        # ===============================
+        # 4️⃣ SORT DATA
+        # ===============================
+        vayuvolt_df = vayuvolt_df.dropna(subset=["Date"])
+        vayuvolt_df = vayuvolt_df.sort_values("Date", ascending=False)
+
+        # ===============================
+        # 5️⃣ HTML CARD LIST
+        # ===============================
+        st.markdown("### 📋 Investment & Return Details")
+
+        for _, row in vayuvolt_df.iterrows():
+
+            amount_color = "#e74c3c" if row["Transaction Type"] == "Vayuvolt_Investment" else "#27ae60"
+            label = "Investment Made" if row["Transaction Type"] == "Vayuvolt_Investment" else "Return Received"
+
+            html_card = f"""
+            <div style="
+                border:1px solid #e0e0e0;
+                border-radius:10px;
+                padding:14px;
+                margin-bottom:12px;
+                background-color:#fafafa;
+            ">
+                <div style="font-size:14px; color:#555;">
+                    📅 {row['Date'].strftime('%d-%m-%Y')}
+                </div>
+
+                <div style="font-size:18px; font-weight:600; color:{amount_color}; margin-top:6px;">
+                    ₹{row['Transaction Amount']:,.0f}
+                </div>
+
+                <div style="font-size:13px; color:#777; margin-top:4px;">
+                    {label}
+                </div>
+
+                <div style="font-size:14px; margin-top:6px;">
+                    📝 {row['Details']}
+                </div>
+            </div>
+            """
+
+            st.components.v1.html(html_card, height=150)
+
 
 
     
     # 🔁 Refresh button
     if st.sidebar.button("🔁 Refresh"):
         st.cache_resource.clear()
-        st.experimental_rerun()
+        st.rerun()
