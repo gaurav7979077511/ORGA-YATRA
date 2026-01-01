@@ -393,14 +393,18 @@ else:
     Payment_Credit_Bank=bank_df[bank_df['Transaction Type'].isin(['Payment_Credit'])]['Amount'].sum()
     ## by ayush
     settlement_credit = bank_df[bank_df['Transaction Type'].isin(['Settlement_Credit'])]['Amount'].sum()
+    Return_On_Investment_credit = bank_df[bank_df['Transaction Type'].isin(['Return_On_Investment'])]['Amount'].sum()
 
-    total_credits = Collection_Credit_Bank+Investment_Credit_Bank+Payment_Credit_Bank+settlement_credit
+    total_credits = Collection_Credit_Bank+Investment_Credit_Bank+Payment_Credit_Bank+settlement_credit+Return_On_Investment_credit
 
     Expence_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Expence_Debit'])]['Amount'].sum()
     Investment_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Investment_Debit'])]['Amount'].sum()
     
     Settlement_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Settlement_Debit'])]['Amount'].sum()
-    total_debits = Expence_Debit_Bank+Settlement_Debit_Bank+Investment_Debit_Bank
+    Settlement_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Settlement_Debit'])]['Amount'].sum()
+    Vayuvolt_Investment_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Vayuvolt_Investment'])]['Amount'].sum()
+
+    total_debits = Expence_Debit_Bank+Settlement_Debit_Bank+Investment_Debit_Bank+Vayuvolt_Investment_Debit_Bank
 
     bank_balance = total_credits - total_debits
 
