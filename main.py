@@ -1883,7 +1883,7 @@ else:
             bill_link = row.get("Bill", "")
 
             attachment_icon = ""
-            if pd.notna(bill_link) and str(bill_link).strip() != "":
+            if pd.notna(bill_link) and str(bill_link).strip():
                 attachment_icon = f"""
                 <a href="{bill_link}" target="_blank"
                 title="View Bill / Attachment"
@@ -1910,7 +1910,7 @@ else:
 
                     <div style="display:flex; align-items:center;">
                         <div style="font-size:18px; font-weight:600; color:{amount_color};">
-                            ₹{row['Amount']:,.0f}
+                            ₹{row['Transaction Amount']:,.0f}
                         </div>
                         {attachment_icon}
                     </div>
@@ -1921,7 +1921,7 @@ else:
                 </div>
 
                 <div style="font-size:14px; margin-top:6px; color:#333;">
-                    📝 {row['Reason']}
+                    📝 {row['Details']}
                 </div>
 
             </div>
