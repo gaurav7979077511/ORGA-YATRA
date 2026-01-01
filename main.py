@@ -393,7 +393,7 @@ else:
     Payment_Credit_Bank=bank_df[bank_df['Transaction Type'].isin(['Payment_Credit'])]['Amount'].sum()
     ## by ayush
     settlement_credit = bank_df[bank_df['Transaction Type'].isin(['Settlement_Credit'])]['Amount'].sum()
-    Return_On_Investment_credit = bank_df[bank_df['Transaction Type'].isin(['Return_On_Investment'])]['Amount'].sum()
+    Return_On_Investment_credit = bank_df[bank_df['Transaction Type'].isin(['Return_On_Investment_Credit'])]['Amount'].sum()
 
     total_credits = Collection_Credit_Bank+Investment_Credit_Bank+Payment_Credit_Bank+settlement_credit+Return_On_Investment_credit
 
@@ -402,7 +402,7 @@ else:
     
     Settlement_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Settlement_Debit'])]['Amount'].sum()
     Settlement_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Settlement_Debit'])]['Amount'].sum()
-    Vayuvolt_Investment_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Vayuvolt_Investment'])]['Amount'].sum()
+    Vayuvolt_Investment_Debit_Bank=bank_df[bank_df['Transaction Type'].isin(['Vayuvolt_Investment_Debit'])]['Amount'].sum()
 
     total_debits = Expence_Debit_Bank+Settlement_Debit_Bank+Investment_Debit_Bank+Vayuvolt_Investment_Debit_Bank
 
@@ -1841,8 +1841,8 @@ else:
         # ===============================
         vayuvolt_df = bank_df[
             bank_df["Transaction Type"].isin([
-                "Vayuvolt_Investment",
-                "Return_On_Investment"
+                "Vayuvolt_Investment_Debit",
+                "Return_On_Investment_Credit"
             ])
         ].copy()
 
@@ -1861,13 +1861,13 @@ else:
         # 2️⃣ KPI CALCULATIONS
         # ===============================
         total_invested = (
-            vayuvolt_df[vayuvolt_df["Transaction Type"] == "Vayuvolt_Investment"]
+            vayuvolt_df[vayuvolt_df["Transaction Type"] == "Vayuvolt_Investment_Debit"]
             ["Transaction Amount"]
             .sum()
         )
 
         total_return = (
-            vayuvolt_df[vayuvolt_df["Transaction Type"] == "Return_On_Investment"]
+            vayuvolt_df[vayuvolt_df["Transaction Type"] == "Return_On_Investment_Credit"]
             ["Transaction Amount"]
             .sum()
         )
@@ -1894,7 +1894,7 @@ else:
 
         for _, row in vayuvolt_df.iterrows():
 
-            is_investment = row["Transaction Type"] == "Vayuvolt_Investment"
+            is_investment = row["Transaction Type"] == "Vayuvolt_Investment_Debit"
             amount_color = "#e74c3c" if is_investment else "#27ae60"
             label = "Investment Made" if is_investment else "Return Received"
 
