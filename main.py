@@ -1818,6 +1818,24 @@ else:
     elif page == "Vayuvolt INV":
         st.title("🏢 Vayuvolt – External Investments")
 
+
+        st.markdown("""
+            <style>
+            /* Make Streamlit content full width */
+            .block-container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+                max-width: 100%;
+            }
+
+            /* Force iframe (HTML cards) to full width */
+            iframe {
+                width: 100% !important;
+            }
+            </style>
+            """, unsafe_allow_html=True)
+
+
         # ===============================
         # 1️⃣ FILTER BANK TRANSACTIONS
         # ===============================
