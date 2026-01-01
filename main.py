@@ -1894,40 +1894,45 @@ else:
 
             html_card = f"""
             <div style="
-                max-width:540px;
+                width:100%;
                 border:1px solid #e0e0e0;
                 border-radius:10px;
-                padding:12px 14px;
+                padding:12px 16px;
                 margin-bottom:12px;
                 background-color:#ffffff;
                 box-shadow:0 1px 3px rgba(0,0,0,0.05);
             ">
 
-                <div style="display:flex; justify-content:space-between; align-items:center;">
+                <!-- Top row -->
+                <div style="display:flex; justify-content:space-between;">
                     <div style="font-size:14px; color:#555;">
-                        📅 {row['Date'].strftime('%d-%m-%Y')}
+                        📅 DD-MM-YYYY
                     </div>
 
-                    <div style="display:flex; align-items:center;">
-                        <div style="font-size:18px; font-weight:600; color:{amount_color};">
-                            ₹{row['Transaction Amount']:,.0f}
-                        </div>
-                        {attachment_icon}
+                    <div style="font-size:18px; font-weight:600;">
+                        ₹XX,XXX
                     </div>
                 </div>
 
+                <!-- Label -->
                 <div style="font-size:13px; color:#777; margin-top:4px;">
-                    {label}
+                    Investment Made / Return Received
                 </div>
 
-                <div style="font-size:14px; margin-top:6px; color:#333;">
-                    📝 {row['Details']}
+                <!-- Description + Attachment -->
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+                    <div style="font-size:14px; color:#333;">
+                        📝 Investment in XYZ Pvt Ltd – Series A
+                    </div>
+
+                    <div style="font-size:16px; cursor:pointer;">
+                        📎
+                    </div>
                 </div>
 
-            </div>
-            """
+            </div>"""
 
-            st.components.v1.html(html_card, height=140)
+            st.components.v1.html(html_card, height=135)
 
 
 
