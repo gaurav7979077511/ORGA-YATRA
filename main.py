@@ -539,7 +539,7 @@ else:
 
     # --- DASHBOARD UI ---
     st.sidebar.header("📂 Navigation")
-    page = st.sidebar.radio("Go to:", ["Dashboard", "Monthly Summary", "Grouped Data", "Expenses", "Investment","Vayuvolt Investment", "Collection Data", "Bank Transaction", "Performance" ])
+    page = st.sidebar.radio("Go to:", ["Dashboard", "Monthly Summary", "Grouped Data", "Expenses", "Investment","Vayuvolt INV", "Collection Data", "Bank Transaction", "Performance" ])
 
     if page == "Dashboard":
         st.title("📊 VayuVolt Dashboard")
@@ -1815,7 +1815,7 @@ else:
                 use_container_width=True
             )
     
-    elif page == "Vayuvolt Investment":
+    elif page == "Vayuvolt INV":
         st.title("🏢 Vayuvolt – External Investments")
 
         # ===============================
@@ -1887,7 +1887,7 @@ else:
                 attachment_icon = f"""
                 <a href="{bill_link}" target="_blank"
                 title="View Bill / Attachment"
-                style="text-decoration:none; font-size:18px; margin-left:10px;">
+                style="text-decoration:none; font-size:16px;">
                     📎
                 </a>
                 """
@@ -1903,36 +1903,36 @@ else:
                 box-shadow:0 1px 3px rgba(0,0,0,0.05);
             ">
 
-                <!-- Top row -->
-                <div style="display:flex; justify-content:space-between;">
+                <!-- Top Row -->
+                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div style="font-size:14px; color:#555;">
-                        📅 DD-MM-YYYY
+                        📅 {row['Date'].strftime('%d-%m-%Y')}
                     </div>
 
-                    <div style="font-size:18px; font-weight:600;">
-                        ₹XX,XXX
+                    <div style="font-size:18px; font-weight:600; color:{amount_color};">
+                        ₹{row['Transaction Amount']:,.0f}
                     </div>
                 </div>
 
                 <!-- Label -->
                 <div style="font-size:13px; color:#777; margin-top:4px;">
-                    Investment Made / Return Received
+                    {label}
                 </div>
 
                 <!-- Description + Attachment -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
                     <div style="font-size:14px; color:#333;">
-                        📝 Investment in XYZ Pvt Ltd – Series A
+                        📝 {row['Details']}
                     </div>
 
-                    <div style="font-size:16px; cursor:pointer;">
-                        📎
-                    </div>
+                    {attachment_icon}
                 </div>
 
-            </div>"""
+            </div>
+            """
 
-            st.components.v1.html(html_card, height=135)
+            st.components.v1.html(html_card, height=130)
+
 
 
 
