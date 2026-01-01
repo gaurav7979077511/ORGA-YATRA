@@ -1870,42 +1870,64 @@ else:
         vayuvolt_df = vayuvolt_df.sort_values("Date", ascending=False)
 
         # ===============================
-        # 5️⃣ HTML CARD LIST
+        # 5️⃣ HTML CARD LIST (WITH BILL ATTACHMENT ICON)
         # ===============================
         st.markdown("### 📋 Investment & Return Details")
 
         for _, row in vayuvolt_df.iterrows():
 
-            amount_color = "#e74c3c" if row["Transaction Type"] == "Vayuvolt_Investment" else "#27ae60"
-            label = "Investment Made" if row["Transaction Type"] == "Vayuvolt_Investment" else "Return Received"
+            is_investment = row["Transaction Type"] == "Vayuvolt_Investment"
+            amount_color = "#e74c3c" if is_investment else "#27ae60"
+            label = "Investment Made" if is_investment else "Return Received"
+
+            bill_link = row.get("Bill", "")
+
+            attachment_icon = ""
+            if pd.notna(bill_link) and str(bill_link).strip() != "":
+                attachment_icon = f"""
+                <a href="{bill_link}" target="_blank"
+                title="View Bill / Attachment"
+                style="text-decoration:none; font-size:18px; margin-left:10px;">
+                    📎
+                </a>
+                """
 
             html_card = f"""
             <div style="
+                max-width:540px;
                 border:1px solid #e0e0e0;
                 border-radius:10px;
-                padding:14px;
+                padding:12px 14px;
                 margin-bottom:12px;
-                background-color:#fafafa;
+                background-color:#ffffff;
+                box-shadow:0 1px 3px rgba(0,0,0,0.05);
             ">
-                <div style="font-size:14px; color:#555;">
-                    📅 {row['Date'].strftime('%d-%m-%Y')}
-                </div>
 
-                <div style="font-size:18px; font-weight:600; color:{amount_color}; margin-top:6px;">
-                    ₹{row['Transaction Amount']:,.0f}
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:14px; color:#555;">
+                        📅 {row['Date'].strftime('%d-%m-%Y')}
+                    </div>
+
+                    <div style="display:flex; align-items:center;">
+                        <div style="font-size:18px; font-weight:600; color:{amount_color};">
+                            ₹{row['Amount']:,.0f}
+                        </div>
+                        {attachment_icon}
+                    </div>
                 </div>
 
                 <div style="font-size:13px; color:#777; margin-top:4px;">
                     {label}
                 </div>
 
-                <div style="font-size:14px; margin-top:6px;">
-                    📝 {row['Details']}
+                <div style="font-size:14px; margin-top:6px; color:#333;">
+                    📝 {row['Reason']}
                 </div>
+
             </div>
             """
 
-            st.components.v1.html(html_card, height=150)
+            st.components.v1.html(html_card, height=140)
 
 
 
