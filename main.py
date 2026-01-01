@@ -1820,20 +1820,27 @@ else:
 
 
         st.markdown("""
-            <style>
-            /* Make Streamlit content full width */
-            .block-container {
-                padding-left: 1rem;
-                padding-right: 1rem;
-                max-width: 100%;
-            }
+        <style>
+        /* FULL WIDTH MAIN CONTAINER */
+        section.main > div {
+            max-width: 100% !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
 
-            /* Force iframe (HTML cards) to full width */
-            iframe {
-                width: 100% !important;
-            }
-            </style>
-            """, unsafe_allow_html=True)
+        /* REMOVE CENTER LIMIT ON VERTICAL BLOCKS */
+        div[data-testid="stVerticalBlock"] {
+            max-width: 100% !important;
+        }
+
+        /* FORCE HTML IFRAMES FULL WIDTH */
+        iframe {
+            width: 100% !important;
+            max-width: 100% !important;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
 
 
         # ===============================
