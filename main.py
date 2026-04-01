@@ -290,7 +290,7 @@ if not st.session_state.authenticated:
                 st.session_state.user_role = role
                 st.session_state.username = username
                 st.session_state.user_name = name
-                st.experimental_set_query_params(logged_in="true")
+                st.query_params["logged_in"] = "true"
 
                 st.success(f"✅ Welcome, {name}!")
                 st.rerun()
@@ -306,7 +306,7 @@ else:
         st.session_state.user_role = None
         st.session_state.username = None
         st.session_state.user_name = None
-        st.experimental_set_query_params(logged_in="false")
+        st.query_params["logged_in"] = "false"
         st.rerun()
 
     st.sidebar.write(f"👤 **Welcome, {st.session_state.user_name}!**")
