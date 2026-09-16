@@ -1667,7 +1667,7 @@ else:
             return ""
     
         styled = display_df[["Date", "Transaction By", "Transaction Type", "Reason", "Amount", "Bill"]].sort_values(by="Date", ascending=False)
-        styled_df = styled.style.applymap(color_amount, subset=["Amount"])
+        styled_df = styled.style.map(color_amount, subset=["Amount"])
 
     
         # 💡 Full Width Styling for Table
